@@ -3,7 +3,8 @@
 // Copyright (C) 2018 Patrick Boettcher <p@yai.se>
 //
 // SPDX-License-Identifier: LGPL-3.0
-
+//
+// Project website: https://github.com/pboettch/cxx_argp
 #ifndef CXX_ARGP_PARSER_H__
 #define CXX_ARGP_PARSER_H__
 

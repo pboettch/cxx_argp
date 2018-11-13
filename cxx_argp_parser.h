@@ -4,6 +4,8 @@
 //
 // SPDX-License-Identifier: LGPL-3.0
 //
+// Version: 1.0.0
+//
 // Project website: https://github.com/pboettch/cxx_argp
 #ifndef CXX_ARGP_PARSER_H__
 #define CXX_ARGP_PARSER_H__

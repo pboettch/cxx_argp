@@ -180,7 +180,59 @@ parser_.add_option({"vector", 'V', "list", 0, "list of ints"}, args.vec);
 An argument for such a type can be given as `1,12,3`, resulting the version containing 1, 12 and 3.
 
 
+### Custom argument converter
 
+Custom argument converters can be implemented by passing a function as second argument to
+`add_option()`. The user has thus complete control of what to do with the raw argument `const char *`.
 
+The prototpye of the function to be given is `bool(const char *)`.
 
+The user has to return `true` if the argument is acceptable for this option, or `false` if not.
 
+There are not limits in regards what can be done using this features:
+
+#### Lambdas
+
+Toggle a boolean:
+
+```C++
+bool enable = false;
+
+parser.add_option({"enable", 'e', nullptr, 0, "enable"},
+                  [&enable] (const char *) { enable = !enable; return true; } );
+```
+
+A verbosity-level indicator:
+
+```C++
+int verbose = 0;
+
+parser.add_option({nullptr, 'v', nullptr, 0, "verbosity level increase"},
+                  [&verbose] (const char *) { verbose++; return true; } );
+```
+
+#### `std::bind`
+
+A useful feature for when using `std::bind` could be to fill in a map-like
+object (think of JSON as a more complex example than a `std::map`).
+
+```C++
+std::map<std::string, std::string> cfg;
+
+auto to_map = [&cfg] (const char *arg, const std::string &key) {
+	map[key] = arg;
+	return true;
+};
+
+parser.add_option({nullptr, 'a', nullptr, 0, "value A"},
+                  std::bind(to_map, std::placeholders::_1, "value1"));
+parser.add_option({nullptr, 'b', nullptr, 0, "value B"},
+                  std::bind(to_map, std::placeholders::_1, "value2"));
+parser.add_option({nullptr, 'c', nullptr, 0, "value C"},
+                  std::bind(to_map, std::placeholders::_1, "value3"));
+```
+
+## Contributing
+
+Do not hesite to ask questions and issue pull-requests here on GitHub.
+Every help is more than welcome.

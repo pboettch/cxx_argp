@@ -1,3 +1,9 @@
+// Header-only, modern C++ argument parser based on ARGP
+//
+// Copyright (C) 2018 Patrick Boettcher <p@yai.se>
+//
+// SPDX-License-Identifier: LGPL-3.0
+
 #ifndef CXX_ARGP_PARSER_H__
 #define CXX_ARGP_PARSER_H__
 
@@ -143,7 +149,6 @@ class parser
 		auto option = parser->convert_.find(key);
 
 		if (option != parser->convert_.end()) {
-			//printf("key: %c %d: %s\n", key, key, arg);
 			parser->counter_[key]++;
 			if (!option->second(arg)) {
 				argp_error(state, "argument '%s' not usable for '%c'", arg, key);

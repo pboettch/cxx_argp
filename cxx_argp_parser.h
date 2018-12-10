@@ -26,7 +26,7 @@ class parser
 {
 	std::vector<argp_option> options_ = {{0}};                 //< argp-option-vector
 	std::map<int, std::function<bool(const char *)>> convert_; //< conversion-function - from const char *arg to value
-	ssize_t expeced_argument_count_ = 0;                       //< expected positional argument count (-1, unlimited)
+	ssize_t expected_argument_count_ = 0;                      //< expected positional argument count (-1, unlimited)
 	std::vector<std::string> arguments_;                       //< positional arguments
 	std::map<int, size_t> counter_;
 	unsigned flags_ = 0;
@@ -168,12 +168,12 @@ class parser
 				break;
 
 			case ARGP_KEY_END:
-				if (parser->expeced_argument_count_ == -1)
+				if (parser->expected_argument_count_ == -1)
 					break;
 
-				if (parser->arguments_.size() > (size_t) parser->expeced_argument_count_)
+				if (parser->arguments_.size() > (size_t) parser->expected_argument_count_)
 					argp_failure(state, 1, 0, "too many arguments given");
-				else if (parser->arguments_.size() < (size_t) parser->expeced_argument_count_)
+				else if (parser->arguments_.size() < (size_t) parser->expected_argument_count_)
 					argp_failure(state, 1, 0, "too few arguments given");
 				break;
 
@@ -189,8 +189,8 @@ class parser
 	}
 
 public:
-	parser(size_t expeced_argument_count_ = 0)
-	    : expeced_argument_count_(expeced_argument_count_) {}
+	parser(size_t expected_argument_count_ = 0)
+	    : expected_argument_count_(expected_argument_count_) {}
 
 	// add an argp-option to the options we care about
 	template <typename T>
@@ -223,8 +223,8 @@ public:
 			return false;
 		}
 
-		if (expeced_argument_count_ != -1 &&
-		    (size_t) expeced_argument_count_ != arguments_.size()) {
+		if (expected_argument_count_ != -1 &&
+		    (size_t) expected_argument_count_ != arguments_.size()) {
 			if (!(flags_ & ARGP_NO_HELP))
 				argp_help(&argp, stderr, ARGP_HELP_USAGE, argv[0]);
 			return false;

@@ -1,6 +1,6 @@
 // Header-only, modern C++ argument parser based on ARGP
 //
-// Copyright (C) 2018 Patrick Boettcher <p@yai.se>
+// Copyright (C) 2018-2019 Patrick Boettcher <p@yai.se>
 //
 // SPDX-License-Identifier: LGPL-3.0
 //

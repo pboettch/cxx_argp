@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 
 find_package(Threads REQUIRED)
 
-add_executable(readme readme.cpp)
-target_include_directories(readme PRIVATE ..)
+add_executable(cxx-argp-readme readme.cpp)
+target_include_directories(cxx-argp-readme PRIVATE ..)
 
 add_executable(basic-test basic-test.cpp)
 target_include_directories(basic-test PRIVATE ..)

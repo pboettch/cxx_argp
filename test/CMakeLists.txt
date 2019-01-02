@@ -2,15 +2,22 @@ cmake_minimum_required(VERSION 3.2)
 
 find_package(Threads REQUIRED)
 
+add_library(cxx-argp INTERFACE)
+target_include_directories(cxx-argp
+    INTERFACE
+        ..)
+target_compile_features(cxx-argp
+    INTERFACE
+        cxx_range_for) # for C++11 - flags
+
 add_executable(cxx-argp-readme readme.cpp)
-target_include_directories(cxx-argp-readme PRIVATE ..)
+target_link_libraries(cxx-argp-readme PRIVATE cxx-argp)
 
 add_executable(basic-test basic-test.cpp)
-target_include_directories(basic-test PRIVATE ..)
+target_link_libraries(basic-test PRIVATE cxx-argp)
 
 add_executable(app app.cpp)
-target_include_directories(app PRIVATE ..)
-target_link_libraries(app Threads::Threads)
+target_link_libraries(app PRIVATE cxx-argp Threads::Threads)
 
 enable_testing()
 

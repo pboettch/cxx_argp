@@ -88,7 +88,8 @@ class parser
 	}
 
 	/* specialised for a pair of file-stream and its filename */
-	std::function<bool(const char *)> make_check_function(std::pair<std::ifstream, std::string> &x)
+	template<typename T>
+	std::function<bool(const char *)> make_check_function(std::pair<T, std::string> &x)
 	{
 		const auto px = &x;
 		return [px](const char *arg) {

@@ -27,7 +27,9 @@ public:
 		std::vector<int> vec;
 
 		std::ifstream file;
-		std::pair<std::ifstream, std::string> file_and_name;
+		std::pair<std::ifstream, std::string> ifile_and_name;
+		std::pair<std::ofstream, std::string> ofile_and_name;
+		std::pair<std::fstream, std::string> file_and_name;
 	} args;
 
 	Main(ssize_t count = 0)
@@ -45,7 +47,9 @@ public:
 		parser_.add_option({"file", 'f', "filename", 0, "a file"}, args.file);
 		parser_.add_option({"enable", 'e', nullptr, 0, "enable"}, args.enable);
 		parser_.add_option({"vector", 'V', "list", 0, "list of ints"}, args.vec);
-		parser_.add_option({"output", 'o', "filename", 0, "filename and file"}, args.file_and_name);
+		parser_.add_option({"output", 'o', "filename", 0, "filename and file"}, args.ofile_and_name);
+		parser_.add_option({"input", 'i', "filename", 0, "filename and file"}, args.ifile_and_name);
+		parser_.add_option({"put", 'F', "filename", 0, "filename and file"}, args.file_and_name);
 	}
 
 	bool test(int argc, char *argv[])
@@ -160,15 +164,15 @@ TEST(CmdlineArgs, file_and_namearg)
 {
 	char *argv[] = {
 	    "program-name",
-	    "-o", "/bin/sh",
+	    "-i", "/bin/sh",
 	};
 
 	Main main;
 
 	ASSERT_EQ(main.test(sizeof(argv) / sizeof(argv[0]), argv), true);
 
-	EXPECT_EQ(main.args.file_and_name.first.is_open(), true);
-	EXPECT_EQ(main.args.file_and_name.second, "/bin/sh");
+	EXPECT_EQ(main.args.ifile_and_name.first.is_open(), true);
+	EXPECT_EQ(main.args.ifile_and_name.second, "/bin/sh");
 }
 
 TEST(CmdlineArgs, non_existant_file_arg)

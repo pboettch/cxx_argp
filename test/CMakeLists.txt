@@ -2,13 +2,15 @@ cmake_minimum_required(VERSION 3.2)
 
 find_package(Threads REQUIRED)
 
-add_library(cxx-argp INTERFACE)
-target_include_directories(cxx-argp
-    INTERFACE
-        ..)
-target_compile_features(cxx-argp
-    INTERFACE
-        cxx_range_for) # for C++11 - flags
+if(NOT TARGET cxx-argp)
+    add_library(cxx-argp INTERFACE)
+    target_include_directories(cxx-argp
+        INTERFACE
+            ..)
+    target_compile_features(cxx-argp
+        INTERFACE
+            cxx_range_for) # for C++11 - flags
+endif()
 
 add_executable(cxx-argp-readme readme.cpp)
 target_link_libraries(cxx-argp-readme PRIVATE cxx-argp)

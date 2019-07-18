@@ -174,7 +174,7 @@ into a `std::vector<>`:
 ```C++
 std::vector<int> vec;
 
-parser_.add_option({"vector", 'V', "list", 0, "list of ints"}, args.vec);
+parser_.add_option({"vector", 'V', "list", 0, "list of ints"}, vec);
 ```
 
 An argument for such a type can be given as `1,12,3`, resulting the version containing 1, 12 and 3.

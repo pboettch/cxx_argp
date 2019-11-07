@@ -1,5 +1,5 @@
 // Header-only, modern C++ main-application-class using
-// an arguemnt-parser based on ARGP
+// an argument-parser based on ARGP
 //
 // Copyright (C) 2018-2019 Patrick Boettcher <p@yai.se>
 //
@@ -29,8 +29,8 @@ protected:
 	application(size_t expected_argument_count = 0)
 	    : arg_parser(expected_argument_count)
 	{
-		std::signal(SIGINT, application::signal_hanlder);
-		std::signal(SIGTERM, application::signal_hanlder);
+		std::signal(SIGINT, application::signal_handler);
+		std::signal(SIGTERM, application::signal_handler);
 	}
 
 	~application()
@@ -50,7 +50,7 @@ protected:
 public:
 	const cxx_argp::parser &arguments() const { return arg_parser; }
 
-	// call this the start the application
+	// call this to start the application
 	int operator()(int argc, char *argv[])
 	{
 		if (!arg_parser.parse(argc, argv))
@@ -77,7 +77,7 @@ public:
 		application::main_event_.wait(lk, [] { return application::interrupted_; });
 	}
 
-	static void signal_hanlder(int sig)
+	static void signal_handler(int sig)
 	{
 		std::lock_guard<std::mutex> lk__(application::main_event_mutex_);
 		switch (reinterpret_cast<std::sig_atomic_t>(sig)) {

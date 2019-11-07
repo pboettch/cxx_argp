@@ -6,7 +6,7 @@ This project provides a header-only, C++ (C++11 and later)
 argument parser library manufactured around GLIBC's ARGP-library.
 
 Its goal is to stick to a maximum to the original concepts and features of ARGP
-in regards to argument-parsing. However, it adds some more advanced featured,
+in regards to argument-parsing. However, it adds some more advanced features,
 especially the **association of variables, check-functions and their
 option-arguments** - represented by the argp-struct.
 
@@ -96,9 +96,9 @@ a value of `struct argp_option`, the second argument is either a variable,
 which is used by reference, or a lamdba-function, `std::function` or `std::bind`
 (of prototype `bool(const char *)`.
 
-This second argument is used during argument parsing, if it was varialbe the option's
+This second argument is used during argument parsing, if it was variable the option's
 argument is tried to be converted to the variable (based on its type), if this is not
-possible, and error is produced and argp will bail out.
+possible, an error is produced and argp will bail out.
 
 If the second argument is a function, this function is called with the argument value
 (a `const char *`) for further processing. This function returns `true` if the
@@ -185,11 +185,11 @@ An argument for such a type can be given as `1,12,3`, resulting the version cont
 Custom argument converters can be implemented by passing a function as second argument to
 `add_option()`. The user has thus complete control of what to do with the raw argument `const char *`.
 
-The prototpye of the function to be given is `bool(const char *)`.
+The prototype of the function to be given is `bool(const char *)`.
 
 The user has to return `true` if the argument is acceptable for this option, or `false` if not.
 
-There are not limits in regards what can be done using this features:
+There are no limit in regards what can be done using this feature:
 
 #### Lambdas
 

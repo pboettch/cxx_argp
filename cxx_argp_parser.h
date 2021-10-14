@@ -24,7 +24,7 @@ namespace cxx_argp
 
 class parser
 {
-	std::vector<argp_option> options_ = {{0}};                 //< argp-option-vector
+	std::vector<argp_option> options_ = {{}};                 //< argp-option-vector
 	std::map<int, std::function<bool(const char *)>> convert_; //< conversion-function - from const char *arg to value
 	ssize_t expected_argument_count_ = 0;                      //< expected positional argument count (-1, unlimited)
 	std::vector<std::string> arguments_;                       //< positional arguments

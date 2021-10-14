@@ -1,3 +1,5 @@
+project(cxx_argp_tests)
+
 cmake_minimum_required(VERSION 3.2)
 
 find_package(Threads REQUIRED)
@@ -10,6 +12,9 @@ if(NOT TARGET cxx-argp)
     target_compile_features(cxx-argp
         INTERFACE
             cxx_range_for) # for C++11 - flags
+    target_compile_options(cxx-argp
+        INTERFACE
+            -Wall -Wextra -Wno-missing-field-initializers)
 endif()
 
 add_executable(cxx-argp-readme readme.cpp)

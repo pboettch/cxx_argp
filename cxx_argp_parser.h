@@ -82,7 +82,7 @@ class parser
 	{
 		const auto px = &x;
 		return [px](const char *arg) {
-			px->open(arg);
+			*px = std::ifstream{arg};
 			return px->good();
 		};
 	}
@@ -94,7 +94,7 @@ class parser
 		const auto px = &x;
 		return [px](const char *arg) {
 			px->second = arg;
-			px->first.open(arg);
+			px->first = T{arg};
 			return px->first.good();
 		};
 	}

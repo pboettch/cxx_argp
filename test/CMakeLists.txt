@@ -23,6 +23,9 @@ target_link_libraries(cxx-argp-readme PRIVATE cxx-argp)
 add_executable(basic-test basic-test.cpp)
 target_link_libraries(basic-test PRIVATE cxx-argp)
 
+add_executable(file-override file-override.cpp)
+target_link_libraries(file-override PRIVATE cxx-argp)
+
 add_executable(app app.cpp)
 target_link_libraries(app PRIVATE cxx-argp Threads::Threads)
 
@@ -36,6 +39,9 @@ add_test(NAME app-without-args
 
 add_test(NAME app-with-right-args
          COMMAND app -h google.org)
+
+add_test(NAME file-override
+    COMMAND file-override -c /etc/passwd)
 
 set_tests_properties(
     app-with-right-args

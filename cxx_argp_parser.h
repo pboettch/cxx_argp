@@ -63,9 +63,13 @@ class parser
 		const auto px = &x;
 		return [px](const char *arg) {
 			char *end;
-			*px = strtol(arg, &end, 0);
+			long value = strtol(arg, &end, 0);
 			if (*end != '\0') // not all of the string has been consumed
 				return false;
+			if (value < std::numeric_limits<T>::min() ||
+				value > std::numeric_limits<T>::max())
+				return false;
+			*px = value;
 			return true;
 		};
 	}

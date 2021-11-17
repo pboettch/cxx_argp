@@ -53,10 +53,10 @@ class parser
 		};
 	}
 
-	/* for integers */
+	/* for signed integers */
 	template <typename T>
 	typename std::enable_if<
-	    std::numeric_limits<T>::is_integer,
+	    std::numeric_limits<T>::is_integer && std::numeric_limits<T>::is_signed,
 	    std::function<bool(const char *)>>::type
 	make_check_function(T &x)
 	{
@@ -68,6 +68,26 @@ class parser
 				return false;
 			if (value < std::numeric_limits<T>::min() ||
 				value > std::numeric_limits<T>::max())
+				return false;
+			*px = value;
+			return true;
+		};
+	}
+
+	/* for unsigned integers */
+	template <typename T>
+	typename std::enable_if<
+	    std::numeric_limits<T>::is_integer && !std::numeric_limits<T>::is_signed,
+	    std::function<bool(const char *)>>::type
+	make_check_function(T &x)
+	{
+		const auto px = &x;
+		return [px](const char *arg) {
+			char *end;
+			unsigned long long int value = strtoull(arg, &end, 0);
+			if (*end != '\0') // not all of the string has been consumed
+				return false;
+			if (value > std::numeric_limits<T>::max())
 				return false;
 			*px = value;
 			return true;

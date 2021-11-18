@@ -203,7 +203,7 @@ public:
 	void add_option(const argp_option &o,
 	                const std::function<bool(const char *)> &&custom)
 	{
-		options_.insert(options_.begin(), o);
+		options_.insert(options_.end() - 1, o);
 		convert_.insert(std::make_pair(o.key, custom));
 		counter_.insert(std::make_pair(o.key, 0));
 	}
